@@ -42,6 +42,7 @@ The content is organized as follows:
 <directory_structure>
 .gitignore
 .mvn/wrapper/maven-wrapper.properties
+Dockerfile
 mvnw
 mvnw.cmd
 pom.xml
@@ -91,47 +92,6 @@ src/main/webapp/WEB-INF/web.xml
 
 <files>
 This section contains the contents of the repository's files.
-
-<file path=".gitignore">
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
-
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
-*.iml
-*.ipr
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
-</file>
 
 <file path=".mvn/wrapper/maven-wrapper.properties">
 distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.8.4/apache-maven-3.8.4-bin.zip
@@ -646,97 +606,6 @@ if "%MAVEN_BATCH_PAUSE%"=="on" pause
 if "%MAVEN_TERMINATE_CMD%"=="on" exit %ERROR_CODE%
 
 cmd /C exit /B %ERROR_CODE%
-</file>
-
-<file path="pom.xml">
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-
-    <groupId>com.queryresolvingsystem</groupId>
-    <artifactId>QueryResolvingSystem</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>QueryResolvingSystem</name>
-    <packaging>war</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <junit.version>5.8.2</junit.version>
-    </properties>
-
-    <dependencies>
-
-
-
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
-
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-
-
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.2</version>
-            </plugin>
-        </plugins>
-    </build>
-</project>
 </file>
 
 <file path="README.md">
@@ -1545,41 +1414,6 @@ public interface Dao_Interface {
 
 
        
-
-
-}
-</file>
-
-<file path="src/main/java/com/queryresolvingsystem/DB_util/DB_Connect.java">
-package com.queryresolvingsystem.DB_util;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class DB_Connect {
-
-    public static Connection getConnection(){
-
-      Connection conn=null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/construct_week";
-        try {
-            conn= DriverManager.getConnection(url,"root","12345678");
-        }
-        catch (SQLException e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-        }
-
-        return conn;
-    }
-
 
 
 }
@@ -3937,6 +3771,175 @@ text-align: center;
          version="4.0">
 
 </web-app>
+</file>
+
+<file path=".gitignore">
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+</file>
+
+<file path="Dockerfile">
+# Tomcat + Java 17
+FROM tomcat:9.0-jdk17
+
+# Remove default ROOT app
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+
+# Copy your WAR file from Maven target folder
+COPY target/QueryResolvingSystem-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
+
+# Expose port
+EXPOSE 8080
+
+# Start Tomcat
+CMD ["catalina.sh", "run"]
+</file>
+
+<file path="pom.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <groupId>com.queryresolvingsystem</groupId>
+    <artifactId>QueryResolvingSystem</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>QueryResolvingSystem</name>
+    <packaging>war</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <junit.version>5.8.2</junit.version>
+    </properties>
+
+    <dependencies>
+
+    <!-- Servlet API (Tomcat provides this at runtime) -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>4.0.1</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <!-- JSTL for JSP -->
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+    </dependency>
+
+    <!-- PostgreSQL JDBC Driver (IMPORTANT for Render DB) -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.1</version>
+    </dependency>
+
+    <!-- JUnit for testing (optional but fine) -->
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+    </dependency>
+
+</dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+</file>
+
+<file path="src/main/java/com/queryresolvingsystem/DB_util/DB_Connect.java">
+package com.queryresolvingsystem.DB_util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DB_Connect {
+
+    public static Connection getConnection() {
+
+        Connection conn = null;
+
+        try {
+            // Load PostgreSQL driver
+            Class.forName("org.postgresql.Driver");
+
+            // JDBC URL for Render PostgreSQL
+            String url = "jdbc:postgresql://dpg-d4bhsuodl3ps739dhbjg-a.oregon-postgres.render.com:5432/query_db_qjnm?sslmode=require";
+
+            // Render PostgreSQL credentials
+            String username = "query_db_qjnm_user";
+            String password = "zQckcceZ7vNTYzAnFb95vQHPi7zwXBiX";
+
+            // Create connection
+            conn = DriverManager.getConnection(url, username, password);
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("PostgreSQL Driver not found!");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Connection Failed!");
+            e.printStackTrace();
+        }
+
+        return conn;
+    }
+}
 </file>
 
 </files>
