@@ -6,30 +6,32 @@ import java.sql.SQLException;
 
 public class DB_Connect {
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
 
-      Connection conn=null;
+        Connection conn = null;
+
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Load PostgreSQL driver
+            Class.forName("org.postgresql.Driver");
+
+            // JDBC URL for Render PostgreSQL
+            String url = "jdbc:postgresql://dpg-d4bhsuodl3ps739dhbjg-a.oregon-postgres.render.com:5432/query_db_qjnm?sslmode=require";
+
+            // Render PostgreSQL credentials
+            String username = "query_db_qjnm_user";
+            String password = "zQckcceZ7vNTYzAnFb95vQHPi7zwXBiX";
+
+            // Create connection
+            conn = DriverManager.getConnection(url, username, password);
+
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        String url = "jdbc:mysql://localhost:3306/construct_week";
-        try {
-            conn= DriverManager.getConnection(url,"root","12345678");
-        }
-        catch (SQLException e){
+            System.out.println("PostgreSQL Driver not found!");
             e.printStackTrace();
-            System.out.println(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Connection Failed!");
+            e.printStackTrace();
         }
 
         return conn;
     }
-
-
-
 }
-
-
-
